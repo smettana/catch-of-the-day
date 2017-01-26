@@ -3,17 +3,23 @@ import {getFunName} from '../helpers';
 
 class StorePicker extends React.Component {
 
+	// constructor(){
+	// 	super();
+	// 	this.goToStore = this.goToStore.bind(this);
+	// }
+
 	goToStore(e){
 		e.preventDefault();
-		console.log('test');		
+		const storeId=this.storeInput.value;
+		this.context.router.transitionTo(`/store/${storeId}`);	
 	}
 
 	render(){
 		return (
-			<form className="store-selector" onSubmit={this.goToStore}>
+			<form className="store-selector" onSubmit={(e) => this.goToStore(e)}>
 				<h2>Please enter a Store</h2>
 				<input type="text" placeholder="Store Name" defaultValue={getFunName()}
-					ref
+					ref={(input) => {this.storeInput=input}}
 				/>
 				<button type="submit">Visit Store</button>			
 			</form>
@@ -21,4 +27,7 @@ class StorePicker extends React.Component {
 	}
 }
 
+StorePicker.contextTypes = {
+	router: React.PropTypes.object
+}
 export default StorePicker;
